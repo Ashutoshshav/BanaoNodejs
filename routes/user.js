@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   handleUserRegister,
   handleUserLogin,
+  handleGetForgotPassword,
   handleForgotPassword,
 } = require("../controllers/user");
 
@@ -14,6 +15,8 @@ router.post("/register", handleUserRegister);
 router.post("/login", handleUserLogin);
 
 //Forgot-password API
-router.post("/forgot-password", handleForgotPassword);
+router
+  .get("/forgot-password", handleGetForgotPassword)
+  .post("/forgot-password", handleForgotPassword);
 
 module.exports = router;

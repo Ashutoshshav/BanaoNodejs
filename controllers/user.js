@@ -13,7 +13,8 @@ const handleUserRegister = async (req, res) => {
 
     await User.create({ username, email, password: hashedPassword });
 
-    res.status(201).send("User registered successfully.");
+    res.status(201).render("login");
+    //res.status(201).send("User registered successfully.");
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -26,13 +27,18 @@ const handleUserLogin = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.send("Login successful.");
+      //res.send("Login successful.");
+      res.status(201).render("posts");
     } else {
       res.status(401).send("Invalid username or password.");
     }
   } catch (error) {
     res.status(500).send(error.message);
   }
+};
+
+const handleGetForgotPassword = (req, res) => {
+  res.render("forgot-password");
 };
 
 const handleForgotPassword = async (req, res) => {
@@ -49,11 +55,10 @@ const handleForgotPassword = async (req, res) => {
       await user.save();
 
       const transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
+        service: "gmail",
         auth: {
-          user: "heber.weber@ethereal.email",
-          pass: "WzSpPsGFK9qaUhWmyG",
+          user: "ashutoshshav@gmail.com",
+          pass: "Ashu#2609512",
         },
       });
 
@@ -77,5 +82,6 @@ const handleForgotPassword = async (req, res) => {
 module.exports = {
   handleUserRegister,
   handleUserLogin,
+  handleGetForgotPassword,
   handleForgotPassword,
 };

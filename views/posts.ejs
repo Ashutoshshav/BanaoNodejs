@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Posts</title>
+  </head>
+  <body>
+    <h1>All Posts</h1>
+    <form action="/api/create-post" method="GET">
+      <button>Create New Post</button>
+    </form>
+    <div>
+      <% if(locals.posts) {%>
+        <table>
+          <thead>
+            <th>S. No</th>
+            <th>Username</th>
+            <th>Title</th>
+            <th>Content</th>
+          </thead>
+          <tbody>
+            <% posts.forEach((post, index) => { %>
+              <tr>
+                  <form action="/api/post/<%= post._id %>">
+                    <td><%= index + 1 %></td>
+                    <td><%= post.username %></td>
+                    <td><%= post.title %> </td>
+                    <td><%= post.content %> </td>
+                    <td><button type="submit">See Detail</button></td>
+                  </form>
+                </tr>
+           <% }) %> 
+          </tbody>
+        </table>
+         <% } %>
+    </div>
+  </body>
+</html>

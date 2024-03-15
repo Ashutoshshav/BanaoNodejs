@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post</title>
+  </head>
+  <body>
+    <h3>Title : <%= locals.post.title %></h3>
+    <p>Content : <%= post.content %></p>
+    <h4>Comments</h4>
+
+      <div>
+          <table>
+            <thead>
+              <th>Username</th>
+              <th>Content</th>
+            </thead>
+            <tbody>
+              <% for(let comment of post.comments) { %>
+                <tr>
+                  <td><%= comment.commentedUser %></td>
+                  <td><%= comment.commentText %></td>
+                </tr>
+              <% } %> 
+            </tbody>
+          </table>
+      </div>
+
+      <form action="/api/update-post/<%= post._id %>" method="GET">
+        <button>Update Post</button>
+      </form>
+
+      <form action="/api/post/<%= post._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete Post</button>
+      </form>
+
+      <form action="/api/comment/<%= post._id %>" method="GET">
+        <button>Drop Comment</button>
+      </form>
+      
+      <form action="/api/like/<%= post._id %>" method="GET">
+        <button type="submit">Like</button>
+      </form>
+  </body>
+</html>
