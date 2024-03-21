@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   handleUserRegister,
+  handleRenderLogin,
   handleUserLogin,
   handleGetForgotPassword,
   handleForgotPassword,
@@ -12,6 +13,7 @@ const {
 router.post("/register", handleUserRegister);
 
 //Login APi
+router.get("/login", handleRenderLogin);
 router.post("/login", handleUserLogin);
 
 //Forgot-password API

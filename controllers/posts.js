@@ -23,7 +23,7 @@ const handleCreatePost = async (req, res) => {
     });
 
     await post.save();
-    res.status(201).send("Post Created");
+    res.status(201).redirect("/api/posts");
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -34,9 +34,9 @@ const handleUpdatePost = async (req, res) => {
     const id = req.params.id;
     const { username, title, content } = req.body;
 
-    await Post.findByIdAndUpdate(id, { username, title, content });
+    const post = await Post.findByIdAndUpdate(id, { username, title, content });
 
-    res.status(201).send("Post Updated");
+    res.status(201).redirect(`/api/post/${id}`);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -47,7 +47,7 @@ const handleDeletePost = async (req, res) => {
     const id = req.params.id;
     //console.log(id);
     await Post.findByIdAndDelete(id);
-    res.status(201).send("Post Deleted");
+    res.status(201).redirect("/api/posts");
   } catch (error) {
     res.status(500).send(error.message);
   }

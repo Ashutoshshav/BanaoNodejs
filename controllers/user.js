@@ -1,5 +1,8 @@
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "Banao";
 
 const User = require("../models/user");
 
@@ -20,6 +23,8 @@ const handleUserRegister = async (req, res) => {
   }
 };
 
+const handleRenderLogin = (req, res) => {res.render("login")};
+
 const handleUserLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -27,8 +32,11 @@ const handleUserLogin = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (user && (await bcrypt.compare(password, user.password))) {
+      const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+        expiresIn: "1h",
+      });
       //res.send("Login successful.");
-      res.status(201).render("posts");
+      res.status(201).cookie('token', token).redirect("/api/posts");
     } else {
       res.status(401).send("Invalid username or password.");
     }
@@ -81,6 +89,7 @@ const handleForgotPassword = async (req, res) => {
 
 module.exports = {
   handleUserRegister,
+  handleRenderLogin,
   handleUserLogin,
   handleGetForgotPassword,
   handleForgotPassword,

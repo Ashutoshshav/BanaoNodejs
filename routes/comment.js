@@ -29,7 +29,7 @@ router
 
       await post.save();
 
-      res.redirect("post");
+      res.redirect(`/api/post/${id}`);
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -42,7 +42,7 @@ router.get("/like/:id", async (req, res) => {
                 const post = await Post.findByIdAndUpdate(id, { $inc: { likes: 1 } }, { new: true });
 
                 //console.log(post);
-                res.status(201).send("Post Liked");
+                res.status(201).redirect(`/api/post/${id}`);
         } catch (error) {
                 res.status(500).send(error.message);
         }

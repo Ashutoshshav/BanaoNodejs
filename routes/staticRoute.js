@@ -10,6 +10,7 @@ router.get("/create-post", (req, res) => {
 router.get("/posts", async (req, res) => {
   try {
     const posts = await Post.find();
+    //console.log(posts);
     res.status(201).render("posts", { posts });
   } catch (error) {
     res.status(500).send(error.message);

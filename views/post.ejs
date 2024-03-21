@@ -8,10 +8,11 @@
   <body>
     <h3>Title : <%= locals.post.title %></h3>
     <p>Content : <%= post.content %></p>
+    <h4><%= post.likes %>Likes</h4>
     <h4>Comments</h4>
 
       <div>
-          <table>
+          <table border="1">
             <thead>
               <th>Username</th>
               <th>Content</th>
